@@ -14,8 +14,8 @@ channels:
 
 
 ```bash
-conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free
-conda config --add channels http://mirrors.aliyun.com/pypi/simple
+$ conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free
+$ conda config --add channels http://mirrors.aliyun.com/pypi/simple
 
 $ conda config --add channels https://mirrors.aliyun.com/anaconda/pkgs/free
 $ conda config --add channels https://mirrors.aliyun.com/anaconda/pkgs/main
@@ -30,7 +30,7 @@ $ conda config --set show_channel_urls yes
 
 
 ```bash
-conda config --remove channels 'https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free
+$ conda config --remove channels 'https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free
 ```
 
 
