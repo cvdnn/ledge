@@ -1,14 +1,14 @@
 ## Uninstall old versions
 
 ```bash
-yum remove docker \
-           docker-client \
-           docker-client-latest \
-           docker-common \
-           docker-latest \
-           docker-latest-logrotate \
-           docker-logrotate \
-           docker-engine
+$ yum remove docker \
+             docker-client \
+             docker-client-latest \
+             docker-common \
+             docker-latest \
+             docker-latest-logrotate \
+             docker-logrotate \
+             docker-engine
 ```
 
 
@@ -16,16 +16,16 @@ yum remove docker \
 ## Set up the repository
 
 ```bash
-yum install -y yum-utils
+$ yum install -y yum-utils
 
-yum-config-manager \
+$ yum-config-manager \
     --add-repo \
     https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
     
-sed -i 's/download.docker.com/mirrors.aliyun.com\/docker-ce/g' /etc/yum.repos.d/docker-ce.repo
+$ sed -i 's/download.docker.com/mirrors.aliyun.com\/docker-ce/g' /etc/yum.repos.d/docker-ce.repo
     
 # 官方源
-# $ sudo yum-config-manager \
+# $ yum-config-manager \
 #     --add-repo \
 #     https://download.docker.com/linux/centos/docker-ce.repo
 ```
@@ -35,7 +35,7 @@ sed -i 's/download.docker.com/mirrors.aliyun.com\/docker-ce/g' /etc/yum.repos.d/
 ## Install Docker Engine
 
 ```bash
-yum install docker-ce docker-ce-cli containerd.io docker-compose-plugin
+$ yum install docker-ce docker-ce-cli containerd.io docker-compose-plugin
 ```
 
 
@@ -43,10 +43,10 @@ yum install docker-ce docker-ce-cli containerd.io docker-compose-plugin
 ## Uninstall Docker Engine
 
 ```bash
-yum remove docker-ce docker-ce-cli containerd.io docker-compose-plugin
+$ yum remove docker-ce docker-ce-cli containerd.io docker-compose-plugin
 
-rm -rf /var/lib/docker
-rm -rf /var/lib/containerd
+$ rm -rf /var/lib/docker
+$ rm -rf /var/lib/containerd
 ```
 
 
@@ -54,9 +54,9 @@ rm -rf /var/lib/containerd
 ## Start Docker
 
 ```bash
-systemctl start docker
+$ systemctl start docker
 
-systemctl enable docker
+$ systemctl enable docker
 ```
 
 
@@ -64,10 +64,10 @@ systemctl enable docker
 ## Edit Repo
 
 ```bash
-systemctl cat docker | grep '\-\-registry\-mirror'
+$ systemctl cat docker | grep '\-\-registry\-mirror'
 # none mirror
 
-vi /etc/docker/daemon.json
+$ vi /etc/docker/daemon.json
 {
     "registry-mirrors": [
         "http://hub-mirror.c.163.com",
@@ -76,10 +76,10 @@ vi /etc/docker/daemon.json
     ]
 }
 
-docker info
+$ docker info
 
-systemctl daemon-reload
+$ systemctl daemon-reload
 
-systemctl restart docker
+$ systemctl restart docker
 ```
 
