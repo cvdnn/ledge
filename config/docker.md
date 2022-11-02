@@ -1,6 +1,6 @@
 ## Uninstall old versions
 
-```bash
+```shell
 $ yum remove docker \
              docker-client \
              docker-client-latest \
