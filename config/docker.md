@@ -22,12 +22,14 @@ $ yum-config-manager \
     --add-repo \
     https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
     
-$ sed -i 's/download.docker.com/mirrors.aliyun.com\/docker-ce/g' /etc/yum.repos.d/docker-ce.repo
+
     
 # 官方源
 # $ yum-config-manager \
 #     --add-repo \
 #     https://download.docker.com/linux/centos/docker-ce.repo
+
+# $ sed -i 's/download.docker.com/mirrors.aliyun.com\/docker-ce/g' /etc/yum.repos.d/docker-ce.repo
 ```
 
 
@@ -35,7 +37,7 @@ $ sed -i 's/download.docker.com/mirrors.aliyun.com\/docker-ce/g' /etc/yum.repos.
 ## Install Docker Engine
 
 ```bash
-$ yum install docker-ce docker-ce-cli containerd.io docker-compose-plugin
+$ yum install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
 ```
 
 
@@ -76,10 +78,9 @@ $ vi /etc/docker/daemon.json
     ]
 }
 
-$ docker info
-
 $ systemctl daemon-reload
-
 $ systemctl restart docker
+
+$ docker info
 ```
 
