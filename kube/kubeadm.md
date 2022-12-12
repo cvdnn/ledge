@@ -109,3 +109,54 @@ $ yum -y install kubeadm-1.23.13 kubelet-1.23.13
 ```bash
 $ systemctl enable kubelet --now
 ```
+
+## Kubeadm config
+
+```bash
+$ kubeadm config images list --kubernetes-version=1.23
+kube-apiserver:v1.23.13
+kube-controller-manager:v1.23.13
+kube-scheduler:v1.23.13
+kube-proxy:v1.23.13
+pause:3.6
+etcd:3.5.1-0
+coredns/coredns:v1.8.6
+```
+
+```sh
+#! /bin/bash
+images=(
+  kube-apiserver:v1.23.13
+  kube-controller-manager:v1.23.13
+  kube-scheduler:v1.23.13
+  kube-proxy:v1.23.13
+  pause:3.6
+  etcd:3.5.1-0
+  coredns/coredns:v1.8.6
+)
+
+for imageName in ${images[@]} ; do
+  docker pull lank8s.cn/$imageName
+  docker tag lank8s.cn/$imageName k8s.gcr.io/$imageName
+done
+```
+
+## Kubeadm init
+
+```bash
+$ kubeadm init \
+        --apiserver-advertise-address=192.168.212.49 \
+        --apiserver-bind-port=6443 \
+        --kubernetes-version=v1.23.13 \
+        --pod-network-cidr=10.50.0.0/16 \
+        --service-cidr=10.40.0.0/16 \
+        --image-repository=lank8s.cn \
+        --ignore-preflight-errors=swap
+        
+$ kubeadm init --config=kubeadm.yml --upload-certs
+```
+
+> --cri-socket=unix:///var/run/cri-dockerd.sock
+
+
+
