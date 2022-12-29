@@ -41,6 +41,8 @@ $ vi /etc/hosts
 
 ```bash
 $ systemctl disable --now firewalld
+Removed symlink /etc/systemd/system/multi-user.target.wants/firewalld.service.
+Removed symlink /etc/systemd/system/dbus-org.fedoraproject.FirewallD1.service.
 
 # $ systemctl stop firewalld
 # $ systemctl disable firewalld
@@ -75,6 +77,7 @@ $ sysctl --system
 ## 配置时间同步
 
 ```bash
+$ yum install -y ntpdate
 $ ntpdate time1.aliyun.com
 
 $ crontab -e
@@ -110,7 +113,7 @@ $ yum -y install kubeadm-1.23.13 kubelet-1.23.13
 $ systemctl enable kubelet --now
 ```
 
-## Kubeadm config
+## Master: Kubeadm config
 
 ```bash
 $ kubeadm config images list --kubernetes-version=1.23
@@ -141,7 +144,7 @@ for imageName in ${images[@]} ; do
 done
 ```
 
-## Kubeadm init
+## Master: Kubeadm init
 
 ```bash
 $ kubeadm init \
@@ -158,5 +161,32 @@ $ kubeadm init --config=kubeadm.yml --upload-certs
 
 > --cri-socket=unix:///var/run/cri-dockerd.sock
 
+## Master: Kubeadm token
 
+```shell
+$ kubeadm token list
+# None
+
+$ kubeadm token create --print-join-command
+kubeadm join 192.168.212.49:6443 --token x7kx8d.hlatu3rjhvkie3nd --discovery-token-ca-cert-hash sha256:fd715a113a083b1ee1fff51a045495f842f2e6f10c9ecb1ff3356a392a3e2f80
+```
+
+## Node: Kubeadm join
+
+```shell
+$ kubeadm join 192.168.212.49:6443 --token x7kx8d.hlatu3rjhvkie3nd --discovery-token-ca-cert-hash sha256:fd715a113a083b1ee1fff51a045495f842f2e6f10c9ecb1ff3356a392a3e2f80
+[preflight] Running pre-flight checks
+[preflight] Reading configuration from the cluster...
+[preflight] FYI: You can look at this config file with 'kubectl -n kube-system get cm kubeadm-config -o yaml'
+[kubelet-start] Writing kubelet configuration to file "/var/lib/kubelet/config.yaml"
+[kubelet-start] Writing kubelet environment file with flags to file "/var/lib/kubelet/kubeadm-flags.env"
+[kubelet-start] Starting the kubelet
+[kubelet-start] Waiting for the kubelet to perform the TLS Bootstrap...
+
+This node has joined the cluster:
+* Certificate signing request was sent to apiserver and a response was received.
+* The Kubelet was informed of the new secure connection details.
+
+Run 'kubectl get nodes' on the control-plane to see this node join the cluster.
+```
 

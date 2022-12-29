@@ -84,3 +84,13 @@ $ systemctl restart docker
 $ docker info
 ```
 
+## Save-Load All Images
+
+```shell
+$ docker save $(docker images --format '{{.Repository}}:{{.Tag}}') -o all_images.tar
+
+# xz -z -T 0 -e -k allimages.tar
+
+$ docker load -i all_images.tar
+```
+
